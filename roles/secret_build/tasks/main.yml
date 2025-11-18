@@ -14,18 +14,18 @@
     - name: Create .env content for the host
       template:
         src: secret_env.j2
-        dest: "/tmp/secret.env"
+        dest: "/tmp/{{ inventory_hostname }}.env"
         mode: "0755"
       delegate_to: localhost # Generate locally before transfer
 
     - name: Transfer the .env file to the host
       copy:
-        src: "/tmp/secret.env"
+        src: "/tmp/{{ inventory_hostname }}.env"
         dest: "{{ dest }}"
         mode: "0755"
 
     - name: Clean up temporary .env file
       file:
-        path: "/tmp/secret.env"
+        path: "/tmp/{{ inventory_hostname }}.env"
         state: absent
       delegate_to: localhost
