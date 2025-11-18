@@ -2,11 +2,11 @@
 # configs_src: Root directory for configuration files
 # config_dest: Destination path on the target host for configuration files
 ---
-name: Deploy configuration files to single host
-block:
-  - name: Synchronize all config files to host
-    ansible.posix.synchronize:
-      src: "{{ configs_src }}/" # local folder of configs
-      dest: "{{ config_dest }}/" # destination on host
-      delete: true # remove files not in src
-    recursive: true
+- name: Deploy configuration files to single host
+  block:
+    - name: Synchronize all config files to host
+      ansible.posix.synchronize:
+        src: "{{ configs_src }}/" # local folder of configs
+        dest: "{{ config_dest }}/" # destination on host
+        delete: true # remove files not in src
+      recursive: true
