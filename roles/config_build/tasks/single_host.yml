@@ -9,4 +9,4 @@
         src: "{{ configs_src }}/" # local folder of configs
         dest: "{{ config_dest }}/" # destination on host
         delete: true # remove files not in src
-      recursive: true
+        recursive: true
