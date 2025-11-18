@@ -1,0 +1,4 @@
+# Ansible Collection requirements
+collections:
+  - name: ansible.posix
+  - name: community.docker

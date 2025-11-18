@@ -1,0 +1,59 @@
+---
+# Parameters:
+#   deploy_dest: Base directory for deployment
+#   compose_src: Directory containing host Docker Compose files
+#   config_mode: Mode for configuration synchronization, either single_host or multi_host
+#   config_src: Root directory for configuration files
+#   secret_src: Path to the Ansible Vault file containing secrets
+#   secret_groups: List of group names to include secrets from
+
+- name: Build and deploy host package
+  block:
+    - name: Prepare deployment directory
+      block:
+        - name: Create deployment base directory
+          file:
+            path: "{{ deploy_dest }}"
+            state: directory
+            mode: "0755"
+            force: true
+
+        - name: Create compose directory
+          file:
+            path: "{{ deploy_dest }}/compose"
+            state: directory
+            mode: "0755"
+            force: true
+
+        - name: Create config directory
+          file:
+            path: "{{ deploy_dest }}/config"
+            state: directory
+            mode: "0755"
+            force: true
+
+    - name: Build and Deploy Secrets
+      include_role:
+        name: bwees.deploy.secret_build
+      vars:
+        src: "{{ secret_src }}"
+        include_groups: "{{ secret_groups }}"
+        dest: "{{ deploy_dest }}/compose/secret.env"
+
+    - name: Build and Deploy Configurations
+      include_role:
+        name: bwees.deploy.config_build
+      vars:
+        src: "{{ config_src }}"
+        dest: "{{ deploy_dest }}/config"
+        mode: "{{ config_mode }}"
+        multi_host_name: "{{ host_folder }}"
+
+    - name: Build and Deploy Docker Containers
+      include_role:
+        name: bwees.deploy.deploy_docker
+      vars:
+        src: "{{ compose_src | default('') }}"
+        dest: "{{ deploy_dest }}/compose"
+        env_src: "{{ deploy_dest }}/compose/secret.env"
+        prune_enabled: true

@@ -1,0 +1,36 @@
+# Parameters:
+#   src: Source directory for Docker Compose files
+#   dest: Destination directory on the target host for Docker Compose files
+#   env_src: Path to the .env file to use for Docker Compose
+#   prune_enabled: Boolean to enable or disable pruning of unused Docker objects
+
+- name: Deploy Docker containers
+  block:
+    - name: Synchronize Docker Compose files to host
+      ansible.posix.synchronize:
+        src: "{{ src }}/"
+        dest: "{{ dest }}/"
+        delete: true # remove files not in src
+        recursive: true
+        rsync_opts:
+          - "--exclude=secret.env"
+      register: compose_result
+
+    - name: Deploy docker-compose files
+      community.docker.docker_compose_v2:
+        project_src: "{{ dest }}"
+        state: present
+        env_files: "{{ env_src }}"
+        files: "{{ item | basename }}"
+        remove_orphans: true
+      with_fileglob:
+        - "{{ src }}/*.yml"
+
+    - name: Prune unused objects
+      raw: |
+        docker image prune -a -f
+        docker volume prune -a -f
+      register: prune_output
+      when: prune_enabled | default(true)
+      # Only mark as changed if there was space reclaimed (when :0B is not in the output)
+      changed_when: prune_output.stdout.find(' 0B') == -1

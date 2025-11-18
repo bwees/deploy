@@ -1,0 +1,31 @@
+---
+# Parameters:
+# src: Path to the Ansible Vault file containing secrets
+# include_groups: List of group names to include secrets from
+# dest: Destination path on the target host for the .env file
+
+- name: Generates secret env file and transfer
+  block:
+    - name: Load secrets from Ansible Vault file
+      include_vars:
+        file: "{{ src }}"
+        name: secrets
+
+    - name: Create .env content for the host
+      template:
+        src: secret_env.j2
+        dest: "/tmp/secret.env"
+        mode: "0755"
+      delegate_to: localhost # Generate locally before transfer
+
+    - name: Transfer the .env file to the host
+      copy:
+        src: "/tmp/secret.env"
+        dest: "{{ dest }}"
+        mode: "0755"
+
+    - name: Clean up temporary .env file
+      file:
+        path: "/tmp/secret.env"
+        state: absent
+      delegate_to: localhost

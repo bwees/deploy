@@ -1,0 +1,21 @@
+# Parameters:
+# src: Root directory for configuration files
+# dest: Destination path on the target host for configuration files
+# mode: Mode for configuration synchronization, either single_host or multi_host
+# multi_host_name: Name of the folder containing host-specific configuration files, only for multi_host mode
+
+---
+- name: Copy service config files
+  block:
+    - include_tasks: single_host.yml
+      when: mode == "single_host"
+      vars:
+        configs_src: "{{ src }}"
+        config_dest: "{{ dest }}"
+
+    - include_tasks: multi_host.yml
+      when: mode == "multi_host"
+      vars:
+        configs_src: "{{ src }}"
+        config_dest: "{{ dest }}"
+        host: "{{ multi_host_name }}"
