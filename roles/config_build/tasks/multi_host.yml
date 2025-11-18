@@ -16,7 +16,7 @@
 
     - name: Check if each service has host-specific config
       stat:
-        path: "{{ item.path }}/{{ host }}"
+        path: "{{ item.path }}/{{ hostname }}"
       delegate_to: localhost
       register: service_config
       loop: "{{ service_dirs.files }}"
@@ -25,7 +25,7 @@
 
     - name: Sync config files to host
       ansible.posix.synchronize:
-        src: "{{ item.item.path }}/{{ host }}/" # local folder of configs
+        src: "{{ item.item.path }}/{{ hostname }}/" # local folder of configs
         dest: "{{ config_dest }}/{{ item.item.path | basename }}/" # destination on host
         delete: true # remove files not in src
         recursive: true

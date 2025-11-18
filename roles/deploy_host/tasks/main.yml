@@ -1,5 +1,6 @@
 ---
 # Parameters:
+#   host: Name of the host being deployed
 #   deploy_dest: Base directory for deployment
 #   compose_src: Directory containing host Docker Compose files
 #   config_mode: Mode for configuration synchronization, either single_host or multi_host
@@ -47,7 +48,7 @@
         src: "{{ config_src }}"
         dest: "{{ deploy_dest }}/config"
         mode: "{{ config_mode }}"
-        multi_host_name: "{{ host_folder }}"
+        host_folder: "{{ host }}"
 
     - name: Build and Deploy Docker Containers
       include_role:
