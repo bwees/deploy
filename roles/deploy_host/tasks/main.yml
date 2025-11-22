@@ -67,3 +67,5 @@
             src: start.sh.j2
             dest: "{{ deploy_dest }}/start.sh"
             mode: "0755"
+          vars:
+            env_path: "{{ deploy_dest }}/compose/secret.env"
