@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - /opt/deployments/host1/config/nginx:/etc/nginx/conf.d:ro
+    environment:
+      - NGINX_HOST=host1.local
+    env_file:
+      - secret.env
+
+  postgres:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - secret.env
+
+volumes:
+  postgres_data:

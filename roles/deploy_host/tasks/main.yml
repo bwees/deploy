@@ -35,7 +35,7 @@
 
     - name: Build and Deploy Secrets
       include_role:
-        name: bwees.deploy.secret_build
+        name: secret_build
       vars:
         src: "{{ secret_src }}"
         include_groups: "{{ secret_groups }}"
@@ -43,7 +43,7 @@
 
     - name: Build and Deploy Configurations
       include_role:
-        name: bwees.deploy.config_build
+        name: config_build
       vars:
         src: "{{ config_src }}"
         dest: "{{ deploy_dest }}/config"
@@ -52,12 +52,13 @@
 
     - name: Build and Deploy Docker Containers
       include_role:
-        name: bwees.deploy.deploy_docker
+        name: deploy_docker
       vars:
         src: "{{ compose_src | default('') }}"
         dest: "{{ deploy_dest }}/compose"
         env_src: "{{ deploy_dest }}/compose/secret.env"
         prune_enabled: true
+        skip_docker_deploy: "{{ skip_docker | default(false) }}"
 
     - name: Copy deployment helper scripts
       block:

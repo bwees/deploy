@@ -1,0 +1,26 @@
+---
+# Test playbook for deploying to 3 hosts
+# - 2 hosts in multi_host config mode
+# - 1 host in single_host config mode
+# Deploys to local output folder without actually running Docker
+
+- name: Test Deploy to Local Output
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Deploy host package
+      include_role:
+        name: deploy_host
+      vars:
+        host: "{{ inventory_hostname }}"
+        deploy_dest: "{{ playbook_dir }}/output/{{ inventory_hostname }}"
+        compose_src: "{{ playbook_dir }}/compose/{{ inventory_hostname }}"
+        config_mode: "{{ host_config_mode }}"
+        config_src: "{{ playbook_dir }}/configs"
+        secret_src: "{{ playbook_dir }}/secrets/vault.yml"
+        secret_groups:
+          - "{{ inventory_hostname }}"
+          - "shared"
+        skip_docker: true
