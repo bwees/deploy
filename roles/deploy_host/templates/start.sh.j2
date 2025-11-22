@@ -3,5 +3,5 @@
 source {{ env_path }}
 
 {% for compose_file in lookup('fileglob', compose_src + '/*', wantlist=True) %}
-docker compose -f {{compose_src}}/{{ compose_file | basename }} up -d
+docker compose -f {{compose_dir}}/{{ compose_file | basename }} up -d
 {% endfor %}

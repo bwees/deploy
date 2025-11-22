@@ -69,3 +69,4 @@
             mode: "0755"
           vars:
             env_path: "{{ deploy_dest }}/compose/secret.env"
+            compose_dir: "{{ deploy_dest }}/compose"
