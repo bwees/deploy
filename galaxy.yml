@@ -1,18 +1,17 @@
 namespace: bwees
-
 name: deploy
 description: An Ansible collection to deploy applications and manage infrastructure.
-version: 1.0.1
+version: 1.1.0
 readme: README.md
 license:
   - MIT
-tags: ["deployment", "infrastructure", "automation"]
-
+tags:
+  - deployment
+  - infrastructure
+  - automation
 authors:
   - Brandon Wees <brandonwees@gmail.com>
-
 dependencies: {}
-
 repository: http://github.com/bwees/ansible-deploy
 homepage: http://github.com/bwees/ansible-deploy
 issues: http://github.com/bwees/ansible-deploy/issues
