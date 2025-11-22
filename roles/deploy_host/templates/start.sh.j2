@@ -1,0 +1,5 @@
+#!/bin/bash
+
+{% for compose_file in lookup('fileglob', compose_src + '/*', wantlist=True) %}
+docker compose -f {{ compose_file | basename }} up -d
+{% endfor %}

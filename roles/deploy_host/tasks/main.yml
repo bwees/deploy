@@ -58,3 +58,11 @@
         dest: "{{ deploy_dest }}/compose"
         env_src: "{{ deploy_dest }}/compose/secret.env"
         prune_enabled: true
+
+    - name: Copy deployment helper scripts
+      block:
+        - name: Copy start script
+          template:
+            src: start.sh.j2
+            dest: "{{ deploy_dest }}/start.sh"
+            mode: "0755"
