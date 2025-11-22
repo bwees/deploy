@@ -1,7 +1,7 @@
 namespace: bwees
 name: deploy
 description: An Ansible collection to deploy applications and manage infrastructure.
-version: 1.1.0
+version: 1.1.1
 readme: README.md
 license:
   - MIT
