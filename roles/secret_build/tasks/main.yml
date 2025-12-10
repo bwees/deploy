@@ -6,7 +6,7 @@
 
 - name: Generates secret env file and transfer
   block:
-    - name: "Run command and parse as json"
+    - name: Parse 1Password item for secrets
       ansible.utils.cli_parse:
         command: 'op item get "{{ op_source }}" --format json'
         parser:
