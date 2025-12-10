@@ -38,6 +38,7 @@
         name: secret_build
       vars:
         op_source: "{{ op_secret_uuid }}"
+        op_vault: "{{ op_secret_vault }}"
         include_groups: "{{ secret_groups }}"
         dest: "{{ deploy_dest }}/compose/secret.env"
 

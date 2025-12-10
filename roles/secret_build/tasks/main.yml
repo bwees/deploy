@@ -1,6 +1,7 @@
 ---
 # Parameters:
 # op_source: UUID of 1Password source item
+# op_vault: Name of the 1Password vault containing the item
 # include_groups: List of group names to include secrets from
 # dest: Destination path on the target host for the .env file
 
@@ -8,7 +9,7 @@
   block:
     - name: Parse 1Password item for secrets
       ansible.utils.cli_parse:
-        command: 'op item get "{{ op_source }}" --format json'
+        command: 'op item get "{{ op_source }}" --vault "{{ op_vault }}" --format json'
         parser:
           name: ansible.utils.json
       register: op_secrets

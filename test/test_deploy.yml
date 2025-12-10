@@ -20,6 +20,7 @@
         config_mode: "{{ host_config_mode }}"
         config_src: "{{ playbook_dir }}/configs"
         op_secret_uuid: "22ob5hftm6f5xo3miwyem6ucpe"
+        op_secret_vault: "pkijqyttxmpkde5kw53lursdva"
         secret_groups:
           - "{{ inventory_hostname }}"
           - "shared"
