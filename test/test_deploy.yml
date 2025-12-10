@@ -19,7 +19,7 @@
         compose_src: "{{ playbook_dir }}/compose/{{ inventory_hostname }}"
         config_mode: "{{ host_config_mode }}"
         config_src: "{{ playbook_dir }}/configs"
-        secret_src: "{{ playbook_dir }}/secrets/vault.yml"
+        op_secret_uuid: "22ob5hftm6f5xo3miwyem6ucpe"
         secret_groups:
           - "{{ inventory_hostname }}"
           - "shared"

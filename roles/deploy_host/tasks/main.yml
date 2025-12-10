@@ -37,7 +37,7 @@
       include_role:
         name: secret_build
       vars:
-        src: "{{ secret_src }}"
+        op_source: "{{ op_secret_uuid }}"
         include_groups: "{{ secret_groups }}"
         dest: "{{ deploy_dest }}/compose/secret.env"
 
