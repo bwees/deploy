@@ -71,3 +71,11 @@
           vars:
             env_path: "{{ deploy_dest }}/compose/secret.env"
             compose_dir: "{{ deploy_dest }}/compose"
+        - name: Copy stop script
+          template:
+            src: stop.sh.j2
+            dest: "{{ deploy_dest }}/stop.sh"
+            mode: "0755"
+          vars:
+            env_path: "{{ deploy_dest }}/compose/secret.env"
+            compose_dir: "{{ deploy_dest }}/compose"
